@@ -1,747 +1,192 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
-    Layout = null; // اگر نمی‌خواهید از Layout استفاده کنید
+    ViewData["Title"] = "صفحه اصلی";
 }
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سیستم پیگیری مدارک</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+
+    <!-- Bootstrap RTL -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- فونت وزیر -->
-    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" />
+
     <style>
         :root {
-            --primary-color: #4361ee;
+            
+            --primary-color: #ffffff;
             --secondary-color: #3a0ca3;
             --glass-bg: rgba(255, 255, 255, 0.25);
             --glass-border: rgba(255, 255, 255, 0.18);
-            --text-color: #333;
+            --text-color: #ffffff;
             --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-        }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            height: 100%;
-            overflow: hidden;
         }
 
         body {
             font-family: Vazir, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/img/bg.jpg') center center / cover no-repeat fixed;
             color: var(--text-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             min-height: 100vh;
-            padding: 20px;
-        }
-
-        .main-container {
-            width: 100%;
-            max-width: 900px;
             display: flex;
             flex-direction: column;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .card-glass {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 300px; /* ارتفاع ثابت برای مربع بودن */
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+            .card-glass:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+            }
+
+            .card-glass i {
+                font-size: 4.2rem;
+                color: var(--primary-color);
+                margin-bottom: 20px;
+                animation: floatSpin 3s ease-in-out infinite;
+            }
+
+        @@keyframes floatSpin {
+            0%
+
+        {
+            transform: translateY(0) rotate(0deg);
+        }
+
+        50% {
+            transform: translateY(-10px) rotate(5deg);
+        }
+
+        100% {
+            transform: translateY(0) rotate(0deg);
+        }
+
+        }
+
+        .card-glass h5 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+
+        @@keyframes floatIcon {
+            0%, 100%
+
+        {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+
+        }
+
+        .card-glass h5 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
             align-items: center;
             justify-content: center;
+            padding: 40px 15px;
         }
 
-        .glass-container {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: 20px;
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow);
-            padding: 40px 30px;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .tracking-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 40px 30px;
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            width: 100%;
+            padding: 15px;
+            font-size: 0.95rem;
+            border-top: 1px solid var(--glass-border);
         }
 
-        .tracking-icon {
-            font-size: 4rem;
-            color: var(--primary-color);
-            margin-bottom: 25px;
-        }
-
-        .tracking-title {
-            font-family: Vazir, sans-serif;
-            font-weight: 700;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #2d3748;
-        }
-
-        .tracking-description {
-            font-family: Vazir, sans-serif;
-            font-weight: 400;
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            color: #4a5568;
-            line-height: 1.6;
-        }
-
-        .btn-primary {
-            font-family: Vazir, sans-serif;
-            font-weight: 500;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            border: none;
-            border-radius: 50px;
-            padding: 18px 40px;
-            font-size: 1.3rem;
-            margin-top: 25px;
-            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-            .btn-primary:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 8px 20px rgba(67, 97, 238, 0.6);
-            }
-
-        .form-control {
-            font-family: Vazir, sans-serif;
-            font-weight: 400;
-            text-align: center;
-            border-radius: 12px;
-            border: 2px solid #e2e8f0;
-            padding: 18px 20px;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-
-            .form-control:focus {
-                border-color: var(--primary-color);
-                box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
-            }
-
-        .results-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 25px;
-            margin-top: 20px;
-            display: none;
-        }
-
-        .table-responsive {
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .table {
-            font-family: Vazir, sans-serif;
-            margin-bottom: 0;
-        }
-
-            .table th {
-                background: var(--primary-color);
-                color: white;
-                font-weight: 500;
-                padding: 15px;
-                text-align: center;
-            }
-
-            .table td {
-                padding: 12px 15px;
-                text-align: center;
-                vertical-align: middle;
-            }
-
-        .footer {
-            font-family: Vazir, sans-serif;
-            font-weight: 300;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 30px;
-            width: 100%;
-        }
-
-            .footer p {
-                margin-bottom: 8px;
-            }
-
-        .touch-friendly {
-            min-height: 70px;
-            font-size: 1.3rem;
-        }
-
-        /* انیمیشن‌ها */
-        @@keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.8s ease forwards;
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .spinner-border {
-            width: 3rem;
-            height: 3rem;
-        }
-
-        /* ریسپانسیو */
         @@media (max-width: 768px) {
-            .main-container {
-                max-width: 100%;
-            }
+            .card-glass
 
-            .glass-container {
-                padding: 20px 15px;
-            }
-
-            .tracking-card {
-                padding: 25px 15px;
-            }
-
-            .table-responsive {
-                font-size: 0.9rem;
-            }
-
-            .table th,
-            .table td {
-                padding: 8px 5px;
-            }
+        {
+            padding: 30px 20px;
         }
 
-        .table tbody tr:hover {
-            background-color: rgba(67, 97, 238, 0.1) !important;
-            transform: scale(1.01);
-            transition: all 0.2s ease;
+        .card-glass i {
+            font-size: 3rem;
+        }
+
+        .card-glass h5 {
+            font-size: 1.2rem;
+        }
+
+        header {
+            font-size: 1.5rem;
+        }
+
         }
     </style>
 </head>
 <body>
-    <div class="main-container">
-        <!-- بخش اصلی پیگیری -->
-        <div class="glass-container fade-in">
-            <div class="tracking-card">
-                <i class="bi bi-file-earmark-text tracking-icon"></i>
-                <h3 class="tracking-title">پیگیری وضعیت نامه</h3>
-                <p class="tracking-description">برای پیگیری وضعیت نامه خود، شماره نامه را در قسمت زیر وارد کنید.</p>
+    <!-- هدر -->
+    <header>
+        سامانه کیوسک اطلاع‌رسانی
+    </header>
 
-                <form id="trackingForm">
-                    <div class="mb-4">
-                        <input type="text" id="trackingCode" class="form-control form-control-lg touch-friendly"
-                               placeholder="شماره نامه را وارد کنید" required>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-lg touch-friendly">
-                        <i class="bi bi-search me-2"></i> پیگیری نامه
-                    </button>
-                </form>
-            </div>
-
-            <!-- بخش نمایش نتایج -->
-            <div id="resultsContainer" class="results-container fade-in">
-                <h4 class="text-center mb-4">نتایج جستجو</h4>
-
-                <div class="loading" id="loading">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">در حال جستجو...</span>
-                    </div>
-                    <p class="mt-2">در حال جستجو...</p>
+    <!-- بخش اصلی -->
+    <main class="container">
+        <div class="row g-4 justify-content-center">
+            <div class="col-12 col-sm-6 col-lg-6 d-flex">
+                <div class="card-glass w-500" onclick="location.href='/Letter/Index'">
+                    <i class="bi bi-file-earmark-text"></i>
+                    <h5>پیگیری نامه</h5>
                 </div>
-
-                <div id="resultsContent">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ETC</th>
-                                    <th>FEC </th>
-                                    <th>موضوع نامه</th>
-                                    <th>شماره نامه</th>
-                                    <th>تاریخ ارسال</th>
-                                </tr>
-                            </thead>
-                            <tbody id="resultTableBody">
-                                <!-- نتایج اینجا نمایش داده می‌شوند -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="noResults" class="text-center py-4" style="display: none;">
-                        <i class="bi bi-exclamation-circle text-warning" style="font-size: 3rem;"></i>
-                        <h5 class="mt-3">نتیجه‌ای یافت نشد</h5>
-                        <p class="text-muted">شماره نامه وارد شده معتبر نمی‌باشد.</p>
-                    </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-6 d-flex">
+                <div class="card-glass w-500" onclick="location.href='/Personnel/Search'">
+                    <i class="bi bi-geo-alt"></i>
+                    <h5>جستجوی مکان پرسنل</h5>
                 </div>
             </div>
         </div>
+    </main>
 
-        <!-- فوتر -->
-        <div class="footer" style="text-align:center; padding:15px; background:#f5f5f5; font-family:tahoma; font-size:14px; color:#444;">
-            <p id="footer-text"></p>
-        </div>
-    </div>
-    
-    <div class="modal fade" id="detailModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">جزئیات نامه</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body" id="modalBody">
-                    <!-- محتوای جزئیات اینجا نمایش داده می‌شود -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-                // گرفتن تاریخ امروز به شمسی
-        const now = new Date().toLocaleDateString("fa-IR");
-        const year = new Date().toLocaleDateString("fa-IR-u-ca-persian").split("/")[0];
 
-        document.getElementById("footer-text").innerHTML =
-            `© ${year} توسعه و پیاده‌سازی توسط گروه مهندسی ای کن  مازندران`;
-        document.getElementById('trackingForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const code = document.getElementById('trackingCode').value.trim();
+    <!-- فوتر -->
+    <footer>
+        © گروه مهندسی ایکن - مازندران | طراحی و توسعه @DateTime.Now.Year
+    </footer>
 
-            if (!code) {
-                alert('لطفاً شماره نامه را وارد کنید');
-                return;
-            }
-
-            searchTrackingCode(code);
-        });
-
-        function searchTrackingCode(code) {
-            // نمایش loading
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('resultsContent').style.display = 'none';
-            document.getElementById('resultsContainer').style.display = 'block';
-
-            fetch(`/Home/Search?trackingCode=${encodeURIComponent(code)}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('خطا در ارتباط با سرور');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    displayResults(data);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    showError('خطا در دریافت اطلاعات');
-                })
-                .finally(() => {
-                    document.getElementById('loading').style.display = 'none';
-                    document.getElementById('resultsContent').style.display = 'block';
-                });
-        }
-
-        function displayResults(data) {
-            const tbody = document.getElementById('resultTableBody');
-            const noResults = document.getElementById('noResults');
-
-            tbody.innerHTML = '';
-
-            if (data.length === 0) {
-                noResults.style.display = 'block';
-                return;
-            }
-
-            noResults.style.display = 'none';
-
-            data.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${item.etc || '-'}</td>
-                    <td>${item.fec || '-'}</td>
-                    <td>${item.docSubject || 'بدون موضوع'}</td>
-                    <td>${item.exportEntityNumber || '-'}</td>
-                    <td>${item.exportDate ? formatDate(item.exportDate) : '-'}</td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
-
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('fa-IR');
-        }
-
-        function showError(message) {
-            const tbody = document.getElementById('resultTableBody');
-            const noResults = document.getElementById('noResults');
-
-            tbody.innerHTML = '';
-            noResults.innerHTML = `
-                <i class="bi bi-x-circle text-danger" style="font-size: 3rem;"></i>
-                <h5 class="mt-3">خطا</h5>
-                <p class="text-muted">${message}</p>
-            `;
-            noResults.style.display = 'block';
-        }
-
-        // جلوگیری از اسکرول
-        document.addEventListener('keydown', function(e) {
-            if(['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) {
-                e.preventDefault();
-            }
-        });
-
-        document.addEventListener('wheel', function(e) {
-            e.preventDefault();
-        }, { passive: false });
-
-                function displayResults(data) {
-            const tbody = document.getElementById('resultTableBody');
-            const noResults = document.getElementById('noResults');
-
-            tbody.innerHTML = '';
-
-            if (data.length === 0) {
-                noResults.style.display = 'block';
-                return;
-            }
-
-            noResults.style.display = 'none';
-
-            data.forEach(item => {
-                const row = document.createElement('tr');
-                row.style.cursor = 'pointer';
-                row.innerHTML = `
-                    <td>${item.etc || '-'}</td>
-                    <td>${item.fec || '-'}</td>
-                    <td>${item.docSubject || 'بدون موضوع'}</td>
-                    <td>${item.exportEntityNumber || '-'}</td>
-                    <td>${item.exportDate ? formatDate(item.exportDate) : '-'}</td>
-                `;
-
-                // اضافه کردن کلیک برای نمایش جزئیات
-                row.addEventListener('click', () => {
-                    showRecordDetails(item);
-                });
-
-                tbody.appendChild(row);
-            });
-        }
-
-          function showRecordDetails(record) {
-            const modalBody = document.getElementById('modalBody');
-
-            // نمایش loading در مودال
-            modalBody.innerHTML = `
-                <div class="text-center py-4">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">در حال بارگذاری...</span>
-                    </div>
-                    <p class="mt-2">در حال دریافت اطلاعات گردش نامه...</p>
-                </div>
-            `;
-
-            // دریافت اطلاعات گردش نامه از سرور
-            fetch(`/Home/GetTrackingHistory?etc=${record.etc}&fec=${record.fec}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('خطا در دریافت اطلاعات گردش نامه');
-                    }
-                    return response.json();
-                })
-                .then(historyData => {
-                    displayTrackingHistory(record, historyData);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    modalBody.innerHTML = `
-                        <div class="alert alert-danger text-center">
-                            <i class="bi bi-exclamation-triangle-fill"></i>
-                            <p class="mt-2">خطا در دریافت اطلاعات گردش نامه</p>
-                            <small>${error.message}</small>
-                        </div>
-                    `;
-                });
-
-            // نمایش Modal
-            const modal = new bootstrap.Modal(document.getElementById('detailModal'));
-            modal.show();
-        }
-
-        function showRecordDetails(record) {
-            const modalBody = document.getElementById('modalBody');
-
-            // نمایش loading در مودال
-            modalBody.innerHTML = `
-                <div class="text-center py-4">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">در حال بارگذاری...</span>
-                    </div>
-                    <p class="mt-2">در حال دریافت اطلاعات گردش نامه...</p>
-                </div>
-            `;
-
-            // لاگ برای دیباگ
-            console.log('Record details:', record);
-            console.log('ETC:', record.etc, 'FEC:', record.fec);
-
-            // بررسی وجود etc و fec
-            if (!record.etc || !record.fec) {
-                modalBody.innerHTML = `
-                    <div class="alert alert-danger text-center">
-                        <i class="bi bi-exclamation-triangle-fill"></i>
-                        <p class="mt-2">خطا در اطلاعات رکورد</p>
-                        <small>اطلاعات لازم برای جستجو موجود نمی‌باشد</small>
-                    </div>
-                `;
-                const modal = new bootstrap.Modal(document.getElementById('detailModal'));
-                modal.show();
-                return;
-            }
-
-            // دریافت اطلاعات گردش نامه از سرور
-            fetch(`/Home/GetTrackingHistory?etc=${record.etc}&fec=${record.fec}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('خطا در دریافت اطلاعات گردش نامه');
-                    }
-                    return response.json();
-                })
-                .then(historyData => {
-                    console.log('History data received:', historyData);
-                    displayTrackingHistory(record, historyData);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    modalBody.innerHTML = `
-                        <div class="alert alert-danger text-center">
-                            <i class="bi bi-exclamation-triangle-fill"></i>
-                            <p class="mt-2">خطا در دریافت اطلاعات گردش نامه</p>
-                            <small>${error.message}</small>
-                        </div>
-                    `;
-                });
-
-            // نمایش Modal
-            const modal = new bootstrap.Modal(document.getElementById('detailModal'));
-            modal.show();
-        }
-
-        function displayTrackingHistory(record, historyData) {
-            const modalBody = document.getElementById('modalBody');
-
-            console.log('Displaying history:', historyData);
-                    let debugHTML = `
-            <div class="alert alert-info">
-                <h6>اطلاعات دیباگ:</h6>
-                <pre>${JSON.stringify(historyData, null, 2)}</pre>
-            </div>
-            `;
-
-            if (!historyData || historyData.length === 0 || historyData.error) {
-                modalBody.innerHTML = `
-                    <div class="alert alert-warning text-center">
-                        <i class="bi bi-info-circle-fill"></i>
-                        <p class="mt-2">اطلاعات گردش نامه یافت نشد</p>
-                        <small>ETC: ${record.etc}, FEC: ${record.fec}</small>
-                    </div>
-                `;
-                return;
-            }
-
-            // ساخت محتوای Modal
-            let historyHTML = `
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <div class="card bg-light border-0">
-                            <div class="card-body">
-                                <h6 class="card-title text-primary">اطلاعات اصلی نامه</h6>
-                                <div class="mb-2">
-                                    <small class="text-muted">کد پیگیری (ETC):</small>
-                                    <p class="mb-0 fw-bold">${record.etc || '-'}</p>
-                                </div>
-                                <div class="mb-2">
-                                    <small class="text-muted">شماره نامه:</small>
-                                    <p class="mb-0 fw-bold">${record.exportEntityNumber || '-'}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card bg-light border-0">
-                            <div class="card-body">
-                                <h6 class="card-title text-primary">جزئیات فرایند</h6>
-                                <div class="mb-2">
-                                    <small class="text-muted">کد فرایند (FEC):</small>
-                                    <p class="mb-0 fw-bold">${record.fec || '-'}</p>
-                                </div>
-                                <div class="mb-2">
-                                    <small class="text-muted">تاریخ ارسال:</small>
-                                    <p class="mb-0 fw-bold">${record.exportDate ? formatDate(record.exportDate) : '-'}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card border-0 shadow-sm">
-                            <div class="card-header bg-primary text-white">
-                                <h5 class="card-title mb-0">
-                                    <i class="bi bi-diagram-3 me-2"></i>گردش نامه
-                                    <span class="badge bg-light text-dark ms-2">${historyData.length} مرحله</span>
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="timeline">
-            `;
-
-            // ساخت تایم‌لاین برای گردش نامه (معکوس برای نمایش از قدیم به جدید)
-            const sortedHistory = [...historyData].reverse();
-
-            sortedHistory.forEach((item, index) => {
-                const isFirst = index === 0;
-                const isLast = index === sortedHistory.length - 1;
-
-                // استفاده از نام فیلدهای واقعی که از دیتابیس می‌آیند
-                const receiverName = item.receiverName || item.ReceiverName || 'نامشخص';
-                const receiveDate = item.receiveDate || item.ReceiveDate;
-
-                historyHTML += `
-                    <div class="timeline-item ${isFirst ? 'timeline-item-start' : ''} ${isLast ? 'timeline-item-end' : ''}">
-                        <div class="timeline-marker ${isFirst ? 'bg-success' : isLast ? 'bg-warning' : 'bg-primary'}">
-                            <i class="bi bi-${isFirst ? 'play-fill' : isLast ? 'check-lg' : 'arrow-right'}"></i>
-                        </div>
-                        <div class="timeline-content">
-                            <div class="card ${isFirst ? 'border-success' : isLast ? 'border-warning' : 'border-primary'}">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <h6 class="card-title">
-                                                <i class="bi bi-person-check me-2"></i>
-                                                ${receiverName}
-                                            </h6>
-                                            <p class="mb-1 text-muted">
-                                                <small>گیرنده: ${receiverName}</small>
-                                            </p>
-                                            ${item.actionType ? `<p class="mb-1 text-muted"><small>نوع اقدام: ${item.actionType}</small></p>` : ''}
-                                            ${item.status ? `<p class="mb-1 text-muted"><small>وضعیت: ${item.status}</small></p>` : ''}
-                                        </div>
-                                        <div class="col-md-4 text-md-end">
-                                            <p class="text-muted mb-1">
-                                                <small>${receiveDate ? formatDateTime(receiveDate) : 'تاریخ نامشخص'}</small>
-                                            </p>
-                                            <span class="badge ${getStepBadgeClass(index, sortedHistory.length)}">
-                                                مرحله ${index + 1}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            historyHTML += `
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <style>
-                    .timeline {
-                        position: relative;
-                        padding: 20px 0;
-                    }
-                    .timeline-item {
-                        display: flex;
-                        margin-bottom: 20px;
-                    }
-                    .timeline-marker {
-                        width: 40px;
-                        height: 40px;
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        color: white;
-                        margin-left: 20px;
-                        flex-shrink: 0;
-                        z-index: 2;
-                    }
-                    .timeline-content {
-                        flex: 1;
-                    }
-                    .timeline-item:not(:last-child) .timeline-content::after {
-                        content: '';
-                        position: absolute;
-                        right: 20px;
-                        top: 40px;
-                        bottom: -20px;
-                        width: 2px;
-                        background: #dee2e6;
-                        z-index: 1;
-                    }
-                    .card {
-                        transition: transform 0.2s;
-                        border-radius: 10px;
-                    }
-                    .card:hover {
-                        transform: translateY(-2px);
-                        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-                    }
-                </style>
-            `;
-
-            modalBody.innerHTML = historyHTML;
-        }
-
-        // تابع کمکی برای فرمت تاریخ و زمان
-        function formatDateTime(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('fa-IR') + ' - ' + date.toLocaleTimeString('fa-IR');
-        }
-
-        // تابع کمکی برای کلاس مرحله
-        function getStepBadgeClass(index, total) {
-            if (index === 0) return 'bg-success';
-            if (index === total - 1) return 'bg-warning';
-            return 'bg-primary';
-        }
-
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
