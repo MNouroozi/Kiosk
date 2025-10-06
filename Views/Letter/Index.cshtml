@@ -396,40 +396,6 @@
         height: 3rem;
     }
 
-    /* دکمه برگشت به بالا */
-    .back-to-top-btn {
-        position: fixed;
-        bottom: 30px;
-        left: 30px;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, rgba(67, 97, 238, 0.9), rgba(58, 12, 163, 0.9));
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        color: white;
-        font-size: 1.5rem;
-        cursor: pointer;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 5px 20px rgba(67, 97, 238, 0.4);
-        z-index: 1000;
-    }
-
-        .back-to-top-btn:hover {
-            transform: translateY(-5px);
-            background: linear-gradient(135deg, rgba(67, 97, 238, 1), rgba(58, 12, 163, 1));
-            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.6);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .back-to-top-btn.show {
-            display: flex;
-            animation: fadeInUp 0.5s ease;
-        }
-
     @@keyframes fadeInUp {
         from {
             opacity: 0;
@@ -442,7 +408,6 @@
         }
     }
 
-    /* ریسپانسیو */
     @@media (max-width: 768px) {
         .card-glass-large {
             padding: 30px 20px;
@@ -517,7 +482,6 @@
         }
     }
 
-    /* استایل Timeline مدرن - سمت راست برای تم دارک */
     .timeline-modern-right-dark {
         position: relative;
         padding: 20px 0;
@@ -708,19 +672,36 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // تابع رفتن به صفحه اصلی
+
     function goToHome() {
         window.location.href = '/Home/Index';
     }
-
-    // مدیریت دکمه برگشت به بالا
+    
     const backToTopBtn = document.getElementById('backToTopBtn');
+    const mainContainer = document.querySelector('.main');
 
+    function toggleBackToTop() {
+        if (mainContainer.scrollTop > 300) {
+            backToTopBtn.style.display = 'flex';
+        } else {
+            backToTopBtn.style.display = 'none';
+        }
+    }
 
-    // عملکرد کلیک دکمه
-    backToTopBtn.addEventListener('click', function() {
-         window.scrollTo({ top: 0, behavior: 'smooth' });
+    // اسکرول container اصلی
+    mainContainer.addEventListener('scroll', toggleBackToTop);
+
+    // عملکرد کلیک دکمه - اسکرول container اصلی به بالا
+    backToTopBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        mainContainer.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     });
+
+    // در ابتدا دکمه را مخفی کن
+    backToTopBtn.style.display = 'none';
 
     document.getElementById('trackingForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -848,24 +829,11 @@
 
         // بعد از نمایش نتایج، دکمه برگشت به بالا را نشان بده
         setTimeout(() => {
-            backToTopBtn.classList.add('show');
+            backToTopBtn.style.display = 'flex';
         }, 500);
     }
 
-    function formatDate(dateString) {
-        if (!dateString) return '-';
 
-        try {
-            const date = new Date(dateString);
-            if (isNaN(date.getTime())) {
-                return '-';
-            }
-            return date.toLocaleDateString('fa-IR');
-        } catch (error) {
-            console.error('Error formatting date:', error);
-            return '-';
-        }
-    }
 
     function showError(message) {
         const cardsContainer = document.getElementById('cardsContainer');
@@ -931,7 +899,28 @@
         const modal = new bootstrap.Modal(document.getElementById('detailModal'));
         modal.show();
     }
+    
+    function formatDate(dateString) {
+        if (!dateString) return '-';
 
+        try {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) {
+            return '-';
+        }
+        return date.toLocaleDateString('fa-IR');
+        } catch (error) {
+        console.error('Error formatting date:', error);
+        return '-';
+        }
+    }
+    
+    function formatDateTime(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('fa-IR') + ' - ' + date.toLocaleTimeString('fa-IR');
+    }
+
+    
     function displayTrackingHistory(record, historyData) {
         const modalBody = document.getElementById('modalBody');
 
@@ -939,7 +928,7 @@
             modalBody.innerHTML = `
                 <div class="alert alert-warning text-center">
                     <i class="bi bi-info-circle-fill"></i>
-                    <p class="mt-2"></p>
+                    <p class="mt-2">نامه دارای گردش نمی باشد.</p>
                     <small>ETC: ${record.etc}, FEC: ${record.fec}</small>
                 </div>
             `;
@@ -953,30 +942,23 @@
             return dateB - dateA;
         });
 
-        let historyHTML = `
-            <div class="info-card-modern-dark mb-4">
-                <h6><i class="bi bi-file-earmark-text"></i> اطلاعات نامه</h6>
-                <div class="info-item-dark">
-                    <span class="info-label-dark">شماره نامه:</span>
-                    <span class="info-value-dark">${record.ImportEntityNumber || '-'}</span>
-                </div>
-                <div class="info-item-dark">
-                    <span class="info-label-dark">موضوع:</span>
-                    <span class="info-value-dark">${record.docSubject || 'بدون موضوع'}</span>
-                </div>
-                <div class="info-item-dark">
-                    <span class="info-label-dark">تاریخ :</span>
-                    <span class="info-value-dark">${record.ImportDate ? formatDate(record.ImportDate) : '-'}</span>
-                </div>
+    let historyHTML = `
+        <div class="info-card-modern-dark mb-4">
+            <h6><i class="bi bi-file-earmark-text"></i> اطلاعات نامه</h6>
+            <div class="info-item-dark">
+                <span class="info-label-dark">شماره نامه:</span>
+                <span class="info-value-dark">${record.importEntityNumber || record.ImportEntityNumber || '-'}</span>
             </div>
-
-            <div class="d-flex align-items-center justify-content-between mb-3">
-                <h5 class="mb-0 text-white">گردش نامه</h5>
-                <span class="badge bg-primary">${sortedHistory.length} مرحله</span>
+            <div class="info-item-dark">
+                <span class="info-label-dark">موضوع:</span>
+                <span class="info-value-dark">${record.docSubject || record.DocSubject || 'بدون موضوع'}</span>
             </div>
-
-            <div class="timeline-modern-right-dark">
-        `;
+            <div class="info-item-dark">
+                <span class="info-label-dark">تاریخ:</span>
+                <span class="info-value-dark">${record.importDate ? formatDate(record.importDate) : record.ImportDate ? formatDate(record.ImportDate) : '-'}</span>
+            </div>
+        </div>
+    `;
 
         sortedHistory.forEach((item, index) => {
             const isCurrent = index === 0;
@@ -1014,11 +996,6 @@
         historyHTML += `</div>`;
 
         modalBody.innerHTML = historyHTML;
-    }
-
-    function formatDateTime(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('fa-IR') + ' - ' + date.toLocaleTimeString('fa-IR');
     }
 
     // بهبود اسکرول صفحه
