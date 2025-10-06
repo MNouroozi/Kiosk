@@ -1,192 +1,101 @@
 ﻿@{
     ViewData["Title"] = "صفحه اصلی";
+    Layout = "_Layout";
 }
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@ViewData["Title"]</title>
 
-    <!-- Bootstrap RTL -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-    <!-- فونت وزیر -->
-    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" />
+<div class="container text-center">
+    <div class="row g-4 justify-content-center align-items-center" style="min-height:60vh;">
+        <div class="col-12 col-sm-6 col-md-4 d-flex justify-content-center">
+            <div class="card-glass" onclick="location.href='/Letter/Index'">
+                <i class="bi bi-file-earmark-text card-icon"></i>
+                <h5>پیگیری نامه</h5>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 d-flex justify-content-center">
+            <div class="card-glass" onclick="location.href='/PersonelLocation/Index'">
+                <i class="bi bi-geo-alt card-icon"></i>
+                <h5>جستجوی مکان پرسنل</h5>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <style>
-        :root {
-            
-            --primary-color: #ffffff;
-            --secondary-color: #3a0ca3;
-            --glass-bg: rgba(255, 255, 255, 0.25);
-            --glass-border: rgba(255, 255, 255, 0.18);
-            --text-color: #ffffff;
-            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+<style>
+    .card-glass {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 25px;
+        padding: 40px 25px;
+        text-align: center;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        height: 250px;
+        width: 250px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        backdrop-filter: blur(15px);
+    }
 
+        .card-glass:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.12);
         }
 
-        body {
-            font-family: Vazir, sans-serif;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/img/bg.jpg') center center / cover no-repeat fixed;
-            color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    .card-icon {
+        font-size: 4rem;
+        color: rgba(255, 255, 255, 0.95);
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+        text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        animation: gentleFloat 3s ease-in-out infinite;
+    }
 
-        header {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            text-align: center;
-            font-size: 1.8rem;
-            font-weight: bold;
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .card-glass {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 25px;
-            padding: 40px 20px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 300px; /* ارتفاع ثابت برای مربع بودن */
-            width: 300px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
-
-            .card-glass:hover {
-                transform: translateY(-10px);
-                box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
-            }
-
-            .card-glass i {
-                font-size: 4.2rem;
-                color: var(--primary-color);
-                margin-bottom: 20px;
-                animation: floatSpin 3s ease-in-out infinite;
-            }
-
-        @@keyframes floatSpin {
-            0%
-
-        {
-            transform: translateY(0) rotate(0deg);
-        }
-
-        50% {
-            transform: translateY(-10px) rotate(5deg);
-        }
-
-        100% {
-            transform: translateY(0) rotate(0deg);
-        }
-
-        }
-
-        .card-glass h5 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-color);
-        }
-
-
-        @@keyframes floatIcon {
-            0%, 100%
-
-        {
+    @@keyframes gentleFloat {
+        0%, 100% {
             transform: translateY(0);
         }
 
         50% {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
         }
+    }
 
-        }
+    .card-glass:hover .card-icon {
+        transform: scale(1.1);
+        color: rgba(255, 255, 255, 1);
+        text-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    }
 
-        .card-glass h5 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--text-color);
-        }
+    .card-glass h5 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.95);
+        margin: 0;
+        transition: all 0.2s ease;
+    }
 
-        main {
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 15px;
-        }
+    .card-glass:hover h5 {
+        color: rgba(255, 255, 255, 1);
+        transform: translateY(-1px);
+    }
 
-        footer {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            text-align: center;
-            padding: 15px;
-            font-size: 0.95rem;
-            border-top: 1px solid var(--glass-border);
-        }
-
-        @@media (max-width: 768px) {
-            .card-glass
-
-        {
+    @@media (max-width: 768px) {
+        .card-glass {
+            height: 200px;
+            width: 200px;
             padding: 30px 20px;
         }
 
-        .card-glass i {
+        .card-icon {
             font-size: 3rem;
         }
 
         .card-glass h5 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
-
-        header {
-            font-size: 1.5rem;
-        }
-
-        }
-    </style>
-</head>
-<body>
-    <!-- هدر -->
-    <header>
-        سامانه کیوسک اطلاع‌رسانی
-    </header>
-
-    <!-- بخش اصلی -->
-    <main class="container">
-        <div class="row g-4 justify-content-center">
-            <div class="col-12 col-sm-6 col-lg-6 d-flex">
-                <div class="card-glass w-500" onclick="location.href='/Letter/Index'">
-                    <i class="bi bi-file-earmark-text"></i>
-                    <h5>پیگیری نامه</h5>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-6 d-flex">
-                <div class="card-glass w-500" onclick="location.href='/Personnel/Search'">
-                    <i class="bi bi-geo-alt"></i>
-                    <h5>جستجوی مکان پرسنل</h5>
-                </div>
-            </div>
-        </div>
-    </main>
-
-
-    <!-- فوتر -->
-    <footer>
-        © گروه مهندسی ایکن - مازندران | طراحی و توسعه @DateTime.Now.Year
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    }
+</style>

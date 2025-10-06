@@ -3,43 +3,110 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - کیوسک اطلاع رسانی</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Kiosk.styles.css" asp-append-version="true" />
+    <title>@ViewData["Title"] - پایانه اطلاع رسانی</title>
+
+    <!-- Bootstrap RTL -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <!-- فونت وزیر -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --glass-bg: rgba(255,255,255,0.25);
+            --glass-border: rgba(255,255,255,0.18);
+            --shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: Vazir, sans-serif;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('@Url.Content("~/img/bg.jpg")') center center / cover no-repeat fixed;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* کل ساختار صفحه سه‌تکه */
+        .page-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .header {
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            border-bottom: 1px solid var(--glass-border);
+            flex-shrink: 0; /* ثابت بالا */
+        }
+
+        .footer {
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            font-size: 0.95rem;
+            flex-shrink: 0; /* ثابت پایین */
+        }
+
+        .main {
+            flex: 1; /* وسط پر بشه */
+            overflow-y: auto; /* فقط وسط اسکرول بخوره */
+            padding: 20px;
+        }
+
+            /* استایل اسکرول بار */
+            .main::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .main::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 10px;
+            }
+
+            .main::-webkit-scrollbar-thumb {
+                background: rgba(67, 97, 238, 0.6);
+                border-radius: 10px;
+            }
+
+                .main::-webkit-scrollbar-thumb:hover {
+                    background: rgba(67, 97, 238, 0.8);
+                }
+    </style>
 </head>
 <body>
+    <div class="page-container">
+        <!-- هدر بالا -->
+        <div class="header">
+            پایانه اطلاع رسانی استانداری استان مازندران
+        </div>
 
-    @RenderBody()
+        <!-- بخش وسط با اسکرول -->
+        <div class="main">
+            @RenderBody()
+        </div>
+
+        <!-- فوتر پایین -->
+        <div class="footer">
+            <p id="footer-text"></p>
+        </div>
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // فعال کردن آیتم منوی جاری
-        $(document).ready(function() {
-            var currentUrl = window.location.pathname;
-            $('.nav-link').each(function() {
-                var linkUrl = $(this).attr('href');
-                if (currentUrl === linkUrl) {
-                    $(this).closest('.nav-item').addClass('active');
-                }
-            });
-
-            // افزودن افکت hover پیشرفته
-            $('.nav-link').hover(
-                function() {
-                    $(this).css('transform', 'translateY(-2px)');
-                },
-                function() {
-                    $(this).css('transform', 'translateY(0)');
-                }
-            );
-        });
+        const year = new Date().toLocaleDateString("fa-IR-u-ca-persian").split("/")[0];
+        document.getElementById("footer-text").innerHTML = `© ${year} توسعه و پیاده‌سازی توسط گروه مهندسی ای کن - مازندران`;
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)

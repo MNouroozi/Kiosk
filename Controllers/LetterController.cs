@@ -24,6 +24,7 @@ public class LetterController : Controller
 
         var result = _context.EntityHistoryTrackings
             .Where(h => h.ExportEntityNumber != null && h.ExportEntityNumber.Contains(trackingCode))
+            .OrderByDescending(h => h.ExportDate)
             .ToList();
 
         return Json(result);
