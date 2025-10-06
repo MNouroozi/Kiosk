@@ -1,0 +1,2 @@
+D:\Development\ican\Kiosk\wwwroot\fonts\bootstrap-icons.woff
+D:\Development\ican\Kiosk\wwwroot\fonts\bootstrap-icons.woff2
