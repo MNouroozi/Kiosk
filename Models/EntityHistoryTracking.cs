@@ -6,12 +6,8 @@ namespace Kiosk.Models;
 public partial class EntityHistoryTracking
 {
     public int Etc { get; set; }
-
     public int Fec { get; set; }
-
     public string? DocSubject { get; set; }
-
-    public string? ExportEntityNumber { get; set; }
-
-    public DateTime? ExportDate { get; set; }
+    public string? ImportEntityNumber { get; set; }
+    public DateTime? ImportDate { get; set; }
 }

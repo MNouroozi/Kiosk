@@ -1,0 +1,50 @@
+﻿.keyboard-glass {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(20px);
+    border-top: 2px solid rgba(255,255,255,0.2);
+    box-shadow: 0 -4px 30px rgba(0,0,0,0.2);
+    padding: 15px;
+    z-index: 1100;
+    direction: rtl;
+    font-family: Vazir, sans-serif;
+}
+
+.keyboard-keys {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.key-glass {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 1.1rem;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(8px);
+}
+
+    .key-glass:hover {
+        background: rgba(67,97,238,0.4);
+        border-color: rgba(67,97,238,0.6);
+    }
+
+.keyboard-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.action-key {
+    flex: 1;
+    font-size: 1rem;
+}

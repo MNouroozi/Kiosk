@@ -23,7 +23,8 @@ public class LetterController : Controller
             return Json(new List<EntityHistoryTracking>());
 
         var result = _context.EntityHistoryTrackings
-            .Where(h => h.ExportEntityNumber != null && h.ExportEntityNumber.Contains(trackingCode))
+            .Where(h => h.ImportEntityNumber != null && h.ImportEntityNumber.Contains(trackingCode))
+            .OrderByDescending(h => h.ImportDate)
             .ToList();
 
         return Json(result);
