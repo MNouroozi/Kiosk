@@ -85,6 +85,11 @@
     </div>
 </div>
 
+<!-- دکمه برگشت به بالا -->
+<button id="backToTopBtn" class="back-to-top-btn" title="برگشت به بالا">
+    <i class="bi bi-chevron-up"></i>
+</button>
+
 <style>
     :root {
         --primary-color: #4361ee;
@@ -167,7 +172,7 @@
     /* دکمه شیشه‌ای اولیه */
     .btn-glass-primary {
         font-family: Vazir, sans-serif;
-        font-weight: 500;
+        font-weight: 400;
         background: linear-gradient(135deg, rgba(67, 97, 238, 0.85), rgba(58, 12, 163, 0.85));
         border: none;
         border-radius: 50px;
@@ -195,7 +200,7 @@
     /* دکمه شیشه‌ای ثانویه برای بازگشت */
     .btn-glass-secondary {
         font-family: Vazir, sans-serif;
-        font-weight: 500;
+        font-weight: 400;
         background: linear-gradient(135deg, rgba(255, 215, 0, 0.7), rgba(218, 165, 32, 0.7));
         border: none;
         border-radius: 50px;
@@ -300,7 +305,7 @@
         .header-item.subject-header {
             justify-content: flex-start;
             text-align: right;
-            direction:rtl;
+            direction: rtl;
         }
 
     /* بدنه کارت */
@@ -311,6 +316,7 @@
         align-items: start;
         padding: 25px;
     }
+
 
     .body-item {
         display: flex;
@@ -338,7 +344,7 @@
         word-wrap: break-word;
         word-break: break-word;
         white-space: normal;
-        max-width: 100%; /* اضافه کردن این خط */
+        max-width: 100%;
     }
 
     .content-value {
@@ -346,7 +352,7 @@
         font-weight: 600;
         font-size: 1rem;
         text-align: center;
-        white-space: nowrap; /* جلوگیری از شکستن خط برای تاریخ و شماره */
+        white-space: nowrap;
     }
 
     /* رنگ‌های مناسب برای آیکون‌ها */
@@ -388,6 +394,52 @@
     .spinner-border {
         width: 3rem;
         height: 3rem;
+    }
+
+    /* دکمه برگشت به بالا */
+    .back-to-top-btn {
+        position: fixed;
+        bottom: 30px;
+        left: 30px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(67, 97, 238, 0.9), rgba(58, 12, 163, 0.9));
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 5px 20px rgba(67, 97, 238, 0.4);
+        z-index: 1000;
+    }
+
+        .back-to-top-btn:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(135deg, rgba(67, 97, 238, 1), rgba(58, 12, 163, 1));
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.6);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .back-to-top-btn.show {
+            display: flex;
+            animation: fadeInUp 0.5s ease;
+        }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     /* ریسپانسیو */
@@ -454,6 +506,14 @@
 
         .subject-text {
             text-align: center;
+        }
+
+        .back-to-top-btn {
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
         }
     }
 
@@ -653,6 +713,16 @@
         window.location.href = '/Home/Index';
     }
 
+    // مدیریت دکمه برگشت به بالا
+    const backToTopBtn = document.getElementById('backToTopBtn');
+
+
+    // عملکرد کلیک دکمه
+    backToTopBtn.addEventListener('click', function() {
+        alert('asdasdasdasdasd');
+         window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
     document.getElementById('trackingForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const code = document.getElementById('trackingCode').value.trim();
@@ -768,6 +838,19 @@
 
             cardsContainer.appendChild(card);
         });
+
+        // اسکرول به وسط صفحه
+        setTimeout(() => {
+            document.getElementById('resultsContainer').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }, 100);
+
+        // بعد از نمایش نتایج، دکمه برگشت به بالا را نشان بده
+        setTimeout(() => {
+            backToTopBtn.classList.add('show');
+        }, 500);
     }
 
     function formatDate(dateString) {
@@ -783,11 +866,6 @@
             console.error('Error formatting date:', error);
             return '-';
         }
-    }
-
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('fa-IR');
     }
 
     function showError(message) {
@@ -862,7 +940,7 @@
             modalBody.innerHTML = `
                 <div class="alert alert-warning text-center">
                     <i class="bi bi-info-circle-fill"></i>
-                    <p class="mt-2">اطلاعات گردش نامه یافت نشد</p>
+                    <p class="mt-2"></p>
                     <small>ETC: ${record.etc}, FEC: ${record.fec}</small>
                 </div>
             `;
@@ -873,7 +951,7 @@
         const sortedHistory = [...historyData].sort((a, b) => {
             const dateA = new Date(a.receiveDate || a.ReceiveDate || '2000-01-01');
             const dateB = new Date(b.receiveDate || b.ReceiveDate || '2000-01-01');
-            return dateB - dateA; // تغییر به dateB - dateA برای معکوس کردن
+            return dateB - dateA;
         });
 
         let historyHTML = `
@@ -902,16 +980,14 @@
         `;
 
         sortedHistory.forEach((item, index) => {
-            const isCurrent = index === 0; // اولین رکورد (جدیدترین) فعلی است
+            const isCurrent = index === 0;
             const receiverName = item.receiverName || item.ReceiverName || 'نامشخص';
             const receiveDate = item.receiveDate || item.ReceiveDate;
 
-            // تعیین آیکون بر اساس موقعیت
             let iconClass = "bi-arrow-left";
             if (index === 0) iconClass = "bi-pin-map";
             if (index === sortedHistory.length - 1) iconClass = "bi-arrow-left";
 
-            // تعیین رنگ بر اساس موقعیت
             let markerColor = "bg-primary";
             if (index === 0) markerColor = "bg-success";
             if (index === sortedHistory.length - 1) markerColor = "bg-info";
@@ -954,5 +1030,4 @@
             card.style.minHeight = 'auto';
         });
     });
-
 </script>
