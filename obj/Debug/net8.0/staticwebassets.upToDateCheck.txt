@@ -2,11 +2,16 @@ wwwroot\css\bootstrap-icons.css
 wwwroot\css\bootstrap.rtl.min.css
 wwwroot\css\fonts\bootstrap-icons.woff
 wwwroot\css\fonts\bootstrap-icons.woff2
+wwwroot\css\fonts\vazir\Vazir-Regular-UI.eot
+wwwroot\css\fonts\vazir\Vazir-Regular-UI.ttf
+wwwroot\css\fonts\vazir\Vazir-Regular-UI.woff
+wwwroot\css\fonts\vazir\Vazir-Regular-UI.woff2
 wwwroot\css\keyboard.css
 wwwroot\css\letter.css
 wwwroot\css\site.css
 wwwroot\favicon.ico
 wwwroot\img\bg.jpg
+wwwroot\img\icon.png
 wwwroot\js\bootstrap.bundle.min.js
 wwwroot\js\keyboard.js
 wwwroot\js\site.js
