@@ -27,8 +27,8 @@ public partial class ICANSBMPSContext : DbContext
                 .ToView("EntityHistoryTracking");
 
             entity.Property(e => e.Etc).HasColumnName("ETC");
-            entity.Property(e => e.ExportDate).HasColumnType("datetime");
-            entity.Property(e => e.ExportEntityNumber).HasMaxLength(255);
+            entity.Property(e => e.ImportDate).HasColumnType("datetime");
+            entity.Property(e => e.ImportEntityNumber).HasMaxLength(255);
             entity.Property(e => e.Fec).HasColumnName("FEC");
         });
 
