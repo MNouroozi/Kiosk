@@ -943,19 +943,35 @@
         });
 
     let historyHTML = `
-        <div class="info-card-modern-dark mb-4">
-            <h6><i class="bi bi-file-earmark-text"></i> اطلاعات نامه</h6>
-            <div class="info-item-dark">
-                <span class="info-label-dark">شماره نامه:</span>
-                <span class="info-value-dark">${record.importEntityNumber || record.ImportEntityNumber || '-'}</span>
-            </div>
-            <div class="info-item-dark">
-                <span class="info-label-dark">موضوع:</span>
-                <span class="info-value-dark">${record.docSubject || record.DocSubject || 'بدون موضوع'}</span>
-            </div>
-            <div class="info-item-dark">
-                <span class="info-label-dark">تاریخ:</span>
-                <span class="info-value-dark">${record.importDate ? formatDate(record.importDate) : record.ImportDate ? formatDate(record.ImportDate) : '-'}</span>
+        <div class="info-card-modern-dark mb-4" style="background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(15px); border-radius: 16px; padding: 25px; border: 1px solid rgba(255, 255, 255, 0.18); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);">
+            <h6 style="display: flex; align-items: center; gap: 10px; color: white; margin-bottom: 25px; font-size: 1.1rem; font-weight: 600;">
+                <i class="bi bi-file-earmark-text" style="color: #4361ee; font-size: 1.3rem;"></i>
+                <span>اطلاعات نامه</span>
+            </h6>
+
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+                <!-- موضوع -->
+                <div style="display: flex; align-items: flex-start; gap: 15px;">
+                    <span style="color: rgba(255, 255, 255, 0.8); font-size: 0.95rem; font-weight: 500; min-width: 80px;">موضوع:</span>
+                    <span style="color: white; font-weight: 500; flex: 1; text-align: right; line-height: 1.5; background: rgba(255, 255, 255, 0.08); padding: 12px 16px; border-radius: 12px; border-right: 3px solid #4361ee;">
+                        ${getProperty(record, 'docSubject', 'DocSubject') || 'بدون موضوع'}
+                    </span>
+                </div>
+
+                <!-- شماره و تاریخ در یک ردیف -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <!-- شماره نامه -->
+                    <div style="text-align: center; background: linear-gradient(135deg, rgba(67, 97, 238, 0.15), rgba(58, 12, 163, 0.15)); padding: 15px; border-radius: 12px; border: 1px solid rgba(67, 97, 238, 0.3);">
+                        <div style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 8px;">شماره نامه</div>
+                        <div style="color: #4361ee; font-weight: 700; font-size: 1.1rem;">${getProperty(record, 'importEntityNumber', 'ImportEntityNumber') || '-'}</div>
+                    </div>
+
+                    <!-- تاریخ -->
+                    <div style="text-align: center; background: linear-gradient(135deg, rgba(32, 201, 151, 0.15), rgba(21, 170, 127, 0.15)); padding: 15px; border-radius: 12px; border: 1px solid rgba(32, 201, 151, 0.3);">
+                        <div style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 8px;">تاریخ</div>
+                        <div style="color: #20c997; font-weight: 700; font-size: 1.1rem;">${formatDate(getProperty(record, 'importDate', 'ImportDate')) || '-'}</div>
+                    </div>
+                </div>
             </div>
         </div>
     `;
@@ -997,7 +1013,10 @@
 
         modalBody.innerHTML = historyHTML;
     }
-
+    
+    function getProperty(obj, prop1, prop2) {
+        return obj[prop1] || obj[prop2];
+    }
     // بهبود اسکرول صفحه
     document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflowX = 'hidden';
